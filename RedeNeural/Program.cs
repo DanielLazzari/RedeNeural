@@ -1,6 +1,4 @@
-﻿//testes
-
-public static class Program
+﻿public static class Program
 { 
     public static void Main()
     {
@@ -36,6 +34,7 @@ public static class Program
 
                 saida = 1 / (1 + Math.Exp(-somatorio)); //gerou um valor próximo a 0,98
 
+                //Para pausa
                 Console.WriteLine();
             }
         }
