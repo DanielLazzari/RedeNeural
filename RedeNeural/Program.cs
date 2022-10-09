@@ -6,8 +6,6 @@
 
         while (!reader.EndOfStream)
         {
-            double somatorio = 0;
-            double saida;
             string? line = reader.ReadLine();
 
             if (line != null)
@@ -21,21 +19,34 @@
 
                 //7 neurônios na saída
 
-                for (int i = 1; i < values.Length; i++) //não considera o values[0], pois é a classe 1000000, 0100000...
+                NeuralNetwork net = new(new int[] {3, 25, 25, 1}); //talvez será {18, 13, 7}
+
+                for (int i = 0; i < 5000; i++)
                 {
-                    Neuronio neuronio = new()
-                    {
-                        Valor = Convert.ToDouble(values[i]),
-                        Peso = new Random().Next(1, 11) * 0.1
-                    };
+                    net.FeedFoward(new float[] { 0, 0, 0 });
+                    net.BackProp(new float[] { 0 });
 
-                    somatorio += neuronio.Valor * neuronio.Peso;
+                    net.FeedFoward(new float[] { 0, 0, 1 });
+                    net.BackProp(new float[] { 1 });
+
+                    net.FeedFoward(new float[] { 0, 1, 0 });
+                    net.BackProp(new float[] { 1 });
+
+                    net.FeedFoward(new float[] { 0, 1, 1 });
+                    net.BackProp(new float[] { 0 });
+
+                    net.FeedFoward(new float[] { 1, 0, 0 });
+                    net.BackProp(new float[] { 1 });
+
+                    net.FeedFoward(new float[] { 1, 0, 1 });
+                    net.BackProp(new float[] { 0 });
+
+                    net.FeedFoward(new float[] { 1, 1, 0 });
+                    net.BackProp(new float[] { 0 });
+
+                    net.FeedFoward(new float[] { 1, 1, 1 });
+                    net.BackProp(new float[] { 1 });
                 }
-
-                saida = 1 / (1 + Math.Exp(-somatorio)); //gerou um valor próximo a 0,98
-
-                //Para pausa
-                Console.WriteLine();
             }
         }
     }

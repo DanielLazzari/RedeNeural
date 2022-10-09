@@ -2,10 +2,17 @@
 
 public class NeuralNetwork
 {
+    readonly int[] layer;
     readonly Layer[] layers;
 
     public NeuralNetwork(int[] layer)
     {
+        this.layer = new int[layer.Length];
+        for (int i = 0; i < layer.Length; i++)
+        {
+            this.layer[i] = layer[i];
+        }
+
         layers = new Layer[layer.Length-1];
 
         for (int i = 0; i < layers.Length; i++)
@@ -93,26 +100,20 @@ public class NeuralNetwork
             {
                 outputs[i] = 0;
 
-                for (int j = 0; i < numberOfInputs; j++)
+                for (int j = 0; j < numberOfInputs; j++)
                 {
                     outputs[i] += inputs[j] * weights[i, j];
                 }
 
-                outputs[i] = (float)Math.Tanh(outputs[i]);
-
-                //Sigmoid ??
-                //outputs[i] = (float)(2 / (1 + Math.Exp(-2 * outputs[i])) - 1);
+                outputs[i] = (float)(2 / (1 + Math.Exp(-2 * outputs[i])) - 1);
             }
 
             return outputs;
         }
 
-        public static float TanHDer(float value)
+        public static float ExpDer(float value)
         {
             return 1 - (value * value);
-
-            //Sigmoid ??
-            //return (float)(1 - (Math.Pow(s, 2)));
         }
 
         public void BackPropOutput(float[] expected)
@@ -124,7 +125,7 @@ public class NeuralNetwork
 
             for (int i = 0; i < numberOfOutputs; i++)
             {
-                gamma[i] = error[i] * TanHDer(outputs[i]);
+                gamma[i] = error[i] * ExpDer(outputs[i]);
             }
 
             for (int i = 0; i < numberOfOutputs; i++)
@@ -147,7 +148,7 @@ public class NeuralNetwork
                     gamma[i] += gammaFoward[j] * weightsFoward[j, i];
                 }
 
-                gamma[i] *= TanHDer(outputs[i]);
+                gamma[i] *= ExpDer(outputs[i]);
             }
 
             for (int i = 0; i < numberOfOutputs; i++)
