@@ -21,7 +21,7 @@ public class NeuralNetwork
         }
     }
 
-    public float[] FeedFoward(float[] inputs)
+    public double[] FeedFoward(double[] inputs)
     {
         layers[0].FeedFoward(inputs);
 
@@ -33,7 +33,7 @@ public class NeuralNetwork
         return layers[layers.Length - 1].outputs;
     }
 
-    public void BackProp(float[] expected)
+    public void BackProp(double[] expected)
     {
         for (int i = layers.Length - 1; i >= 0; i--)
         {
@@ -58,12 +58,12 @@ public class NeuralNetwork
         readonly int numberOfInputs;  //# of neurons in the previous layer
         readonly int numberOfOutputs; //# of neurons in the current layer
 
-        public float[] outputs;
-        public float[] inputs;
-        public float[,] weights;
-        public float[,] weightsDelta;
-        public float[] gamma;
-        public float[] error;
+        public double[] outputs;
+        public double[] inputs;
+        public double[,] weights;
+        public double[,] weightsDelta;
+        public double[] gamma;
+        public double[] error;
         public Random random = new();
 
         public Layer(int numberOfInputs, int numberOfOutputs)
@@ -71,12 +71,12 @@ public class NeuralNetwork
             this.numberOfInputs = numberOfInputs;
             this.numberOfOutputs = numberOfOutputs;
 
-            outputs = new float[numberOfOutputs];
-            inputs = new float[numberOfInputs];
-            weights = new float[numberOfOutputs, numberOfInputs];
-            weightsDelta = new float[numberOfOutputs, numberOfInputs];
-            gamma = new float[numberOfOutputs];
-            error = new float[numberOfOutputs];
+            outputs = new double[numberOfOutputs];
+            inputs = new double[numberOfInputs];
+            weights = new double[numberOfOutputs, numberOfInputs];
+            weightsDelta = new double[numberOfOutputs, numberOfInputs];
+            gamma = new double[numberOfOutputs];
+            error = new double[numberOfOutputs];
 
             InitializeWeights();
         }
@@ -87,12 +87,12 @@ public class NeuralNetwork
             {
                 for (int j = 0; j < numberOfInputs; j++)
                 {
-                    weights[i, j] = (float)random.NextDouble() - 0.5f;
+                    weights[i, j] = random.Next(1, 11); //random number between 1 and 10
                 }
             }
         }
 
-        public float[] FeedFoward(float[] inputs)
+        public double[] FeedFoward(double[] inputs)
         {
             this.inputs = inputs;
 
@@ -105,18 +105,18 @@ public class NeuralNetwork
                     outputs[i] += inputs[j] * weights[i, j];
                 }
 
-                outputs[i] = (float)(2 / (1 + Math.Exp(-2 * outputs[i])) - 1);
+                outputs[i] = (2 / (1 + Math.Exp(-2 * outputs[i])) - 1);
             }
 
             return outputs;
         }
 
-        public static float ExpDer(float value)
+        public static double ExpDer(double value)
         {
             return 1 - (value * value);
         }
 
-        public void BackPropOutput(float[] expected)
+        public void BackPropOutput(double[] expected)
         {
             for (int i = 0; i < numberOfOutputs; i++)
             {
@@ -137,7 +137,7 @@ public class NeuralNetwork
             }
         }
 
-        public void BackPropHidden(float[] gammaFoward, float[,] weightsFoward)
+        public void BackPropHidden(double[] gammaFoward, double[,] weightsFoward)
         {
             for (int i = 0; i < numberOfOutputs; i++)
             {
@@ -166,7 +166,7 @@ public class NeuralNetwork
             {
                 for (int j = 0; j < numberOfInputs; j++)
                 {
-                    weights[i, j] -= weightsDelta[i, j] * 0.033f;  //Learning Curve, edit to verify accuracy ??
+                    weights[i, j] -= weightsDelta[i, j] * 0.033;  //Learning Curve, edit to verify accuracy ??
                 }
             }
         }
