@@ -87,7 +87,7 @@ public class NeuralNetwork
             {
                 for (int j = 0; j < numberOfInputs; j++)
                 {
-                    weights[i, j] = random.Next(1, 11); //random number between 1 and 10
+                    weights[i, j] = random.NextDouble(); //random number between 0.0 and 1.0
                 }
             }
         }
@@ -105,7 +105,7 @@ public class NeuralNetwork
                     outputs[i] += inputs[j] * weights[i, j];
                 }
 
-                outputs[i] = (2 / (1 + Math.Exp(-2 * outputs[i])) - 1);
+                outputs[i] = 1 / (1 + Math.Exp(-outputs[i]));
             }
 
             return outputs;
@@ -166,7 +166,7 @@ public class NeuralNetwork
             {
                 for (int j = 0; j < numberOfInputs; j++)
                 {
-                    weights[i, j] -= weightsDelta[i, j] * 0.033;  //Learning Curve, edit to verify accuracy ??
+                    weights[i, j] -= weightsDelta[i, j] * 0.04;
                 }
             }
         }
