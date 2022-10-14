@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\dlazz\\.nuget\\packages\\": {}
+    "C:\\Users\\daniel.lazzari\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dlazz\\OneDrive\\Área de Trabalho\\Inteligência Computacional\\Trabalho 2\\TrabalhoRedeNeural\\RedeNeural\\RedeNeural.csproj",
+      "projectUniqueName": "C:\\Users\\daniel.lazzari\\Desktop\\RedeNeural\\RedeNeural\\RedeNeural.csproj",
       "projectName": "RedeNeural",
-      "projectPath": "C:\\Users\\dlazz\\OneDrive\\Área de Trabalho\\Inteligência Computacional\\Trabalho 2\\TrabalhoRedeNeural\\RedeNeural\\RedeNeural.csproj",
-      "packagesPath": "C:\\Users\\dlazz\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dlazz\\OneDrive\\Área de Trabalho\\Inteligência Computacional\\Trabalho 2\\TrabalhoRedeNeural\\RedeNeural\\obj\\",
+      "projectPath": "C:\\Users\\daniel.lazzari\\Desktop\\RedeNeural\\RedeNeural\\RedeNeural.csproj",
+      "packagesPath": "C:\\Users\\daniel.lazzari\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\daniel.lazzari\\Desktop\\RedeNeural\\RedeNeural\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dlazz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\daniel.lazzari\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

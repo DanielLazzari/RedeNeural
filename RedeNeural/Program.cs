@@ -4,67 +4,111 @@ public static class Program
 {
     public static void Main()
     {
+        int[,] matrizConfusao = new int[7,7];
+        int posicaoBitCerto = 0;
+        int posicaoBitErrado;
+
         StreamReader reader = new(File.OpenRead(@"C:\Users\dlazz\OneDrive\Área de Trabalho\Inteligência Computacional\Trabalho 2\PlanilhaPronta.csv"));
 
         while (!reader.EndOfStream)
         {
-            string? line = reader.ReadLine();
+            string? linha = reader.ReadLine();
 
-            if (line != null)
+            if (linha != null)
             {
-                string[] values = line.Split(';');
-                double[] valores = new double[values.Length-1];
+                string[] valoresDataSet = linha.Split(';');
+
+                double[] valoresDouble = new double[valoresDataSet.Length-1];
+                double[] classe = new double[7];
 
                 //1 classe
-                //18 neurônios na entrada
-
-                //13 neurônios no meio
-
-                //7 neurônios na saída
-
+                //18 na entrada
+                //13 no meio
+                //7 na saída
                 NeuralNetwork net = new(new int[] { 18, 13, 7 });
 
-                for (int i = 1; i < values.Length; i++)
+                for (int i = 1; i < valoresDataSet.Length; i++)
                 {
-                    valores[i-1] = Convert.ToDouble(values[i].Replace(',', '.'), CultureInfo.InvariantCulture);
+                    valoresDouble[i-1] = Convert.ToDouble(valoresDataSet[i].Replace(',', '.'), CultureInfo.InvariantCulture);
                 }
 
-                for (int j = 0; j < 5000; j++)
+                for (int i = 0; i < valoresDataSet[0].Length; i++)
                 {
-                    net.FeedFoward(valores);
+                    classe[i] = valoresDataSet[0][i] - 48;
+                }
 
-                    switch (values[0])
+                for (int i = 0; i < 5000; i++)
+                {
+                    net.FeedFoward(valoresDouble);
+                    net.BackProp(classe);
+                }
+
+                for (int i = 0; i < classe.Length; i++)
+                {
+                    if (classe[i] == 1)
                     {
-                        case "1000000":
-                            net.BackProp(new double[] { 1, 0, 0, 0, 0, 0, 0 });
-                            break;
-                        case "0100000":
-                            net.BackProp(new double[] { 0, 1, 0, 0, 0, 0, 0 });
-                            break;
-                        case "0010000":
-                            net.BackProp(new double[] { 0, 0, 1, 0, 0, 0, 0 });
-                            break;
-                        case "0001000":
-                            net.BackProp(new double[] { 0, 0, 0, 1, 0, 0, 0 });
-                            break;
-                        case "0000100":
-                            net.BackProp(new double[] { 0, 0, 0, 0, 1, 0, 0 });
-                            break;
-                        case "0000010":
-                            net.BackProp(new double[] { 0, 0, 0, 0, 0, 1, 0 });
-                            break;
-                        case "0000001":
-                            net.BackProp(new double[] { 0, 0, 0, 0, 0, 0, 1 });
-                            break;
+                        posicaoBitCerto = i;
+                        break;
                     }
                 }
 
-                var resultado = net.FeedFoward(valores);
+                double[] resultado = net.FeedFoward(valoresDouble);
 
-                Console.WriteLine("{0}, {1}, {2}, {3}, {4}, {5}, {6}", resultado[0], resultado[1], resultado[2], resultado[3], resultado[4], resultado[5], resultado[6]);
+                posicaoBitErrado = -1;
+
+                for (int i = 0; i < resultado.Length; i++)
+                {
+                    if (Math.Round(resultado[i]) == 1 && i != posicaoBitCerto)
+                    {
+                        posicaoBitErrado = i;
+                        break;
+                    }
+                }
+
+                if (posicaoBitErrado != -1)
+                {
+                    matrizConfusao[posicaoBitCerto, posicaoBitErrado]++;
+                }
+                else
+                {
+                    matrizConfusao[posicaoBitCerto, posicaoBitCerto]++;
+                }
             }
         }
 
-        //Matriz de confusão
+        for (int i = 0; i < matrizConfusao.GetLength(0); i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    Console.Write("1000000: ");
+                    break;
+                case 1:
+                    Console.Write("0100000: ");
+                    break;
+                case 2:
+                    Console.Write("0010000: ");
+                    break;
+                case 3:
+                    Console.Write("0001000: ");
+                    break;
+                case 4:
+                    Console.Write("0000100: ");
+                    break;
+                case 5:
+                    Console.Write("0000010: ");
+                    break;
+                default:
+                    Console.Write("0000001: ");
+                    break;
+            }
+
+            for (int j = 0; j < matrizConfusao.GetLength(1); j++)
+            {
+                Console.Write("{0} ", matrizConfusao[i, j]);
+            }
+
+            Console.WriteLine();
+        }
     }
 }
