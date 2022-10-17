@@ -78,7 +78,7 @@
             {
                 for (int j = 0; j < numeroDeEntradas; j++)
                 {
-                    pesos[i, j] = random.NextDouble(); //número aleatório entre 0.0 and 1.0
+                    pesos[i, j] = random.NextDouble(); //número aleatório entre 0.0 e 1.0
                 }
             }
         }

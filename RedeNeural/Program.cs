@@ -14,7 +14,7 @@ public static class Program
 
         //Lê o arquivo do dataset, sendo que o arquivo irá estar com os valores normalizados e sem o nome do cabeçalho de cada coluna
         //As classes irão estar em valores dummy
-        StreamReader reader = new(File.OpenRead(@"C:\Users\dlazz\OneDrive\Área de Trabalho\Inteligência Computacional\Trabalho 2\PlanilhaPronta.csv"));
+        StreamReader reader = new(File.OpenRead(@"C:\Users\dlazz\OneDrive\Área de Trabalho\Inteligência Computacional\Trabalho 2\treino.test.csv"));
 
         //Percorre cada linha do dataset
         while (!reader.EndOfStream)
